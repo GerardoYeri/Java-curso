@@ -23,7 +23,12 @@ public class DaoFactory {
 	
 	@Transactional
 	public void persistirProducto(Producto producto) {
-		em.persist(producto);
+		if(producto.getPrecioConIva() > 0 && producto.getPrecioSinIva() > 0) {
+			em.persist(producto);
+		}else {
+			System.err.println("No se puede persistir "+ producto + " : precios no calculados correctamente.");
+		}
+		
 	
 	
 	}

@@ -30,19 +30,69 @@ public class Cliente {
 	@Column(unique = true, nullable = false)
 	private int dni;
 	
+	@Column(name = "Telefono")
+	private String telefono;
+	
+	@Column(name = "Direccion")
+	private String direccion;
+	
+	@Column(name = "Ciudad")
+	private String ciudad;
+	
+	@Column(name = "Saldo")
+	private double saldo;
+	
 	@ManyToMany(mappedBy = "clientes", fetch = FetchType.EAGER)
 	private List<Producto> productos = new ArrayList<>();
 	
 	private LocalDateTime createdAt;
 
 	
-	
-	public Cliente(String nombre, String apellido, int dni) {
+	//Constructor sobrecargado
+	public Cliente(String nombre, String apellido, int dni, String telefono, String direccion, String ciudad) {
 		super();
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
+		this.telefono = telefono;
+		this.direccion = direccion;
+		this.ciudad = ciudad;
 		this.createdAt = LocalDateTime.now();
+	}
+	
+	
+	
+	//Encapsulamiento
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
+	}
+
+	public double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(double saldo) {
+		this.saldo = saldo;
 	}
 
 	public long getId() {
@@ -93,12 +143,15 @@ public class Cliente {
 		this.createdAt = createdAt;
 	}
 
+	//To string
 	@Override
 	public String toString() {
-		return "Cliente [id=" + id + ", apellido=" + apellido + ", nombre=" + nombre + ", dni=" + dni + ", producto="
+		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", telefono="
+				+ telefono + ", direccion=" + direccion + ", ciudad=" + ciudad + ", saldo=" + saldo + ", productos="
 				+ productos + ", createdAt=" + createdAt + "]";
 	}
 
+	//Constructor vacio
 	public Cliente() {
 		super();
 		

@@ -40,6 +40,7 @@ public class Producto {
 	@Column(name = "Precio SIN IVA")
 	private double precioSinIva;
 	
+	//Constante IVA
 	private static final double IVA = 21.0 / 100;
 	
 	@Column(name = "Precio CON IVA")
@@ -48,12 +49,13 @@ public class Producto {
 	@Column(name = "Stock")
 	private int stock ;
 	
+	
+	//Constructor vacio
 	public Producto() {
 		super();
 	}
 	
-	
-
+	//Constructor sobrecargado
 	public Producto(String nombre) {
 		super();
 		this.nombre = nombre;
@@ -61,42 +63,30 @@ public class Producto {
 	}
 
 	
-
+	//Encapsulamiento
 	public double getPrecioConIva() {
 		return precioConIva;
 	}
-
-
 
 	public void setPrecioConIva(double precioConIva) {
 		this.precioConIva = precioConIva;
 	}
 
-
-
 	public double getPrecioSinIva() {
 		return precioSinIva;
 	}
-
-
-
+	
 	public void setPrecioSinIva(double precio) {
 		this.precioSinIva = precio;
 	}
-
-	
 
 	public int getStock() {
 		return stock;
 	}
 
-
-
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -131,33 +121,33 @@ public class Producto {
 	}
 
 
-
 	
-
+	//To String
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", clientes=" + clientes + ", createdAt=" + createdAt
-				+ ", precioSinIva=" + precioSinIva + ", precioConIva=" + precioConIva + "]";
+		return "Producto [id=" + id + ", nombre=" + nombre + ", createdAt=" + createdAt
+				+ ", precioSinIva=" + precioSinIva + ", precioConIva=" + precioConIva + ", stock=" + stock + "]";
 	}
-
 	
-	String mensajeErrorGananciaNoMayorACero = "La ganancia deben ser mayor a cero";
-
+	
+	//Metodos
+	
 	public double calcularPrecioSinIva(double costo, double ganancia) throws GananciaNoMayorACero {
 		if (ganancia <= 0 ) {
-			throw new GananciaNoMayorACero(mensajeErrorGananciaNoMayorACero);
+			throw new GananciaNoMayorACero();
+		}else {						
+			double precioConGanancia = costo *(1+ ganancia /100); 
+			double precioConGananciaRedondeado = Math.round(precioConGanancia*100.0)/100.0;
+			setPrecioSinIva(precioConGananciaRedondeado);
+			return precioConGananciaRedondeado;
 		}
-		double precioConGanancia = costo *(1+ ganancia /100); 
-		double precioConGananciaRedondeado = Math.round(precioConGanancia*100.0)/100.0;
-		setPrecioSinIva(precioConGananciaRedondeado);
-		return precioConGananciaRedondeado;
 	}
 	
-	String mensajeErrorPrecioSinIvaNoCalculado = "El precio sin iva no fue calculado previamente" ;
+	
 	
 	public double calcularPrecioConIva() throws PrecioSinIvaNoCalculado {
 			if(precioSinIva == 0) {
-				throw new PrecioSinIvaNoCalculado(mensajeErrorPrecioSinIvaNoCalculado);
+				throw new PrecioSinIvaNoCalculado();
 			}
 		double precioConIva = precioSinIva * (1 + IVA);
 		double precioConIvaRedondeado = Math.round(precioConIva*100.0)/100;
@@ -165,7 +155,17 @@ public class Producto {
 		return precioConIvaRedondeado;
 	}
 
-
+	
+	public void prosesarProducto(Producto producto, double costo, double ganancia) {
+		try {
+			calcularPrecioSinIva(costo, ganancia);
+			calcularPrecioConIva();
+		} catch (GananciaNoMayorACero error) {
+			System.err.println("En el producto "+ getNombre() + error.getMessage());
+		}catch (PrecioSinIvaNoCalculado error) {
+			System.err.println("En el producto "+ getNombre() + error.getMessage());
+		}
+	}
 
 	
 	
