@@ -10,14 +10,14 @@ import com.coderhouse.models.Cliente;
 import com.coderhouse.models.Producto;
 
 @SpringBootApplication
-public class ProyectoFinalApplication implements CommandLineRunner {
+public class FacturacionPrimerEntregaDepetris implements CommandLineRunner {
 	
 
 	@Autowired
 	private DaoFactory dao;
 	
 	public static void main(String[] args) {
-		SpringApplication.run(ProyectoFinalApplication.class, args);
+		SpringApplication.run(FacturacionPrimerEntregaDepetris.class, args);
 	}
 
 	@Override
