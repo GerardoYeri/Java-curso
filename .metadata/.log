@@ -8475,3 +8475,84 @@ END
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 10:13:58.452
 !MESSAGE The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:33:07.889
+!MESSAGE Classpath changed for project: clase-02
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:33:07.890
+!MESSAGE Classpath changed for project: clase02
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:33:10.488
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:33:10.490
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:33:21.291
+!MESSAGE Classpath changed for project: clase-04
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:33:21.292
+!MESSAGE Classpath changed for project: clase04
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:33:21.844
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:33:21.847
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:33:48.241
+!MESSAGE Classpath changed for project: clase-05
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:33:48.242
+!MESSAGE Classpath changed for project: clase05
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:33:48.713
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:33:48.714
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:00.931
+!MESSAGE Classpath changed for project: clase-06
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:00.934
+!MESSAGE Classpath changed for project: clase06
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:34:01.660
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:34:01.663
+!MESSAGE Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:10.591
+!MESSAGE Classpath changed for project: clase-08
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:10.591
+!MESSAGE Classpath changed for project: clase08
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:10.592
+!MESSAGE Boot project REMOVED: clase08
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2024-12-21 14:34:11.553
+!MESSAGE The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:11.836
+!MESSAGE Classpath changed for project: clase-08
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:11.837
+!MESSAGE Boot project ADDED: clase-08
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:20.193
+!MESSAGE Classpath changed for project: clase-09
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:20.194
+!MESSAGE Classpath changed for project: clase09
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:20.194
+!MESSAGE Boot project REMOVED: clase09
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:21.698
+!MESSAGE Classpath changed for project: clase-09
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2024-12-21 14:34:21.698
+!MESSAGE Boot project ADDED: clase-09
