@@ -43,7 +43,7 @@ public class Alumno {
 
 	public Alumno() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.createdAt = LocalDateTime.now();
 	}
 
 	public Alumno(Long id, String nombre, String apellido, int dni, String legajo, List<Curso> cursos,
@@ -55,7 +55,7 @@ public class Alumno {
 		this.dni = dni;
 		this.legajo = legajo;
 		this.cursos = cursos;
-		this.createdAt = LocalDateTime.now();;
+		this.createdAt = LocalDateTime.now();
 	}
 	
 	
