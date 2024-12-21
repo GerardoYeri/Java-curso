@@ -36,7 +36,7 @@ public class Alumno {
 	@ManyToMany(mappedBy = "alumnos", fetch = FetchType.EAGER)
 	private List<Curso> cursos = new ArrayList<>();
 	
-	private LocalDateTime creDateATime;
+	private LocalDateTime createdAt;
 
 	public Alumno() {
 		super();
@@ -52,7 +52,7 @@ public class Alumno {
 		this.dni = dni;
 		this.legajo = legajo;
 		this.cursos = cursos;
-		this.creDateATime = creDateATime;
+		this.createdAt = LocalDateTime.now();
 	}
 	
 	
@@ -65,6 +65,7 @@ public class Alumno {
 		this.apellido = apellido;
 		this.dni = dni;
 		this.legajo = legajo;
+		this.createdAt = LocalDateTime.now();
 	}
 
 	public Long getId() {
@@ -114,19 +115,21 @@ public class Alumno {
 	public void setCursos(List<Curso> cursos) {
 		this.cursos = cursos;
 	}
-
-	public LocalDateTime getCreDateATime() {
-		return creDateATime;
+	
+	
+	
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setCreDateATime(LocalDateTime creDateATime) {
-		this.creDateATime = creDateATime;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
 
 	@Override
 	public String toString() {
 		return "Alumno [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni + ", legajo="
-				+ legajo + ", cursos=" + cursos + ", creDateATime=" + creDateATime + "]";
+				+ legajo + ", cursos=" + cursos + ", createdAt=" + createdAt + "]";
 	}
 	
 	

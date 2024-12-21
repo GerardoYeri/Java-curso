@@ -2,6 +2,7 @@ package com.coderhouse.dao;
 
 import org.springframework.stereotype.Service;
 
+
 import com.coderhouse.models.Alumno;
 import com.coderhouse.models.Categoria;
 import com.coderhouse.models.Curso;
@@ -27,7 +28,7 @@ public class DaoFactoty {
 		em.persist(curso);
 	}
 	
-	
+	@Transactional
 	public void persistirCategoria(Categoria categoria) {
 		em.persist(categoria);
 	}
