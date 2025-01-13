@@ -13,54 +13,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coderhouse.models.Alumno;
-import com.coderhouse.services.AlumnoService;
+import com.coderhouse.models.Curso;
+import com.coderhouse.services.CursoService;
 
 @RestController
-@RequestMapping("/api/alumnos")
-public class AlumnoContoller {
-
+@RequestMapping("/api/cursos")
+public class CursoController {
+	
 	@Autowired
-	private AlumnoService alumnoService;
+	private CursoService cursoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Alumno>> getAllAlumnos(){
+	public ResponseEntity<List<Curso>> getAllcursos(){
 		try {
-			List<Alumno> alumnos = alumnoService.getAllAlumnos();
-			return ResponseEntity.ok(alumnos);
+			List<Curso> cursos = cursoService.getAllCursos();
+			return ResponseEntity.ok(cursos);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		}	
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Alumno> getAlumnoById(@PathVariable Long id){
+	public ResponseEntity<Curso> getCursoById(@PathVariable Long id){
 		try {
-			Alumno alumno = alumnoService.findById(id);
-			return ResponseEntity.ok(alumno);
+			Curso curso = cursoService.findById(id);
+			return ResponseEntity.ok(curso); 
 		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();						
+			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-	
 	}
 	
 	@PostMapping
-	public ResponseEntity<Alumno> createAlumno(@RequestBody Alumno alumno){
+	public ResponseEntity<Curso> createCurso(@RequestBody Curso curso){
 		try {
-			Alumno alumnoCreado = alumnoService.saveAlumno(alumno);
-			return ResponseEntity.status(HttpStatus.CREATED).body(alumnoCreado);
+			Curso cursoCreado = cursoService.saveCurso(curso);
+			return ResponseEntity.status(HttpStatus.CREATED).body(cursoCreado);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	
 	@PostMapping("/{id}")
-	public ResponseEntity<Alumno> updateAlumnoById(Long id,@RequestBody Alumno alumnoModificado){
+	public ResponseEntity<Curso> updateCursoById(@PathVariable Long id, Curso cursoDetails){
 		try {
-			Alumno updateAlumno = alumnoService.updateAlumnoById(id, alumnoModificado) ;
-			return ResponseEntity.ok(updateAlumno);
+			Curso cursoModificado = cursoService.updateCursoById(id, cursoDetails);
+			return ResponseEntity.ok(cursoModificado);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
@@ -69,9 +68,9 @@ public class AlumnoContoller {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteAlumnoById(@PathVariable Long id){
+	public ResponseEntity<Void> deleteCursoById(@PathVariable Long id){
 		try {
-			alumnoService.deleteAlumno(id);
+			cursoService.deleteById(id);
 			return ResponseEntity.noContent().build();
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
@@ -79,7 +78,5 @@ public class AlumnoContoller {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-
-}	
 	
-
+}

@@ -9,69 +9,68 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coderhouse.models.Alumno;
-import com.coderhouse.services.AlumnoService;
+import com.coderhouse.models.Categoria;
+import com.coderhouse.services.CategoriaService;
 
 @RestController
-@RequestMapping("/api/alumnos")
-public class AlumnoContoller {
+@RequestMapping("/api/categorias")
+public class CategoriaController {
 
 	@Autowired
-	private AlumnoService alumnoService;
-	
+	private CategoriaService categoriaService;
+
 	@GetMapping
-	public ResponseEntity<List<Alumno>> getAllAlumnos(){
+	public ResponseEntity<List<Categoria>> getAllCategorias() {
 		try {
-			List<Alumno> alumnos = alumnoService.getAllAlumnos();
-			return ResponseEntity.ok(alumnos);
+			List<Categoria> categorias = categoriaService.getAllCategorias();
+			return ResponseEntity.ok(categorias);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Alumno> getAlumnoById(@PathVariable Long id){
+	public ResponseEntity<Categoria> getCategoriaById(@PathVariable long id) {
 		try {
-			Alumno alumno = alumnoService.findById(id);
-			return ResponseEntity.ok(alumno);
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();						
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	
-	}
-	
-	@PostMapping
-	public ResponseEntity<Alumno> createAlumno(@RequestBody Alumno alumno){
-		try {
-			Alumno alumnoCreado = alumnoService.saveAlumno(alumno);
-			return ResponseEntity.status(HttpStatus.CREATED).body(alumnoCreado);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-	}
-	
-	@PostMapping("/{id}")
-	public ResponseEntity<Alumno> updateAlumnoById(Long id,@RequestBody Alumno alumnoModificado){
-		try {
-			Alumno updateAlumno = alumnoService.updateAlumnoById(id, alumnoModificado) ;
-			return ResponseEntity.ok(updateAlumno);
+			Categoria categoria = categoriaService.findById(id);
+			return ResponseEntity.ok(categoria);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteAlumnoById(@PathVariable Long id){
+
+	@PostMapping
+	public ResponseEntity<Categoria> createCategoria(@RequestBody Categoria categoria) {
 		try {
-			alumnoService.deleteAlumno(id);
+			Categoria createdCategoria = categoriaService.createCategoria(categoria);
+			return ResponseEntity.status(HttpStatus.CREATED).body(createdCategoria);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<Categoria> updateCategoria(@PathVariable Long id, @RequestBody Categoria categoriaDetails) {
+		try {
+			Categoria updatedCategoria = categoriaService.updateCategoriaById(id, categoriaDetails);
+			return ResponseEntity.ok(updatedCategoria);
+
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> deleteCategoria(@PathVariable Long id) {
+		try {
+			categoriaService.deleteById(id);
 			return ResponseEntity.noContent().build();
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
@@ -79,7 +78,4 @@ public class AlumnoContoller {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-
-}	
-	
-
+}

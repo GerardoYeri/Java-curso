@@ -25,7 +25,7 @@ public class CategoriaService {
 				.orElseThrow(() -> new IllegalArgumentException("Categoria no Encontrada"));
 		}
 	
-	public Categoria saveById(Long id, Categoria categoria) {
+	public Categoria createCategoria(Categoria categoria) {
 		return categoriaRepository.save(categoria);
 	}
 	

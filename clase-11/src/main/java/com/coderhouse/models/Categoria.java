@@ -25,7 +25,7 @@ public class Categoria {
 	@Column(name = "Nombre")
 	private String nombre;
 	
-	@OneToMany(mappedBy = "categorias", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
 	@JsonIgnore
 	private List<Curso> cursos = new ArrayList<>();
 
