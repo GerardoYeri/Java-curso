@@ -14,31 +14,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coderhouse.models.Cliente;
-import com.coderhouse.services.ClienteService;
+import com.coderhouse.models.Curso;
+import com.coderhouse.services.CursoService;
 
 @RestController
-@RequestMapping("/api/clientes")
-public class ClienteController {
+@RequestMapping("/api/cursos")
+public class CursoController {
 	
 	@Autowired
-	private ClienteService clienteService;
+	private CursoService cursoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Cliente>> getAllClientes(){
+	public ResponseEntity<List<Curso>> getAllcursos(){
 		try {
-			List<Cliente> clientes = clienteService.getAllClientes();
-			return ResponseEntity.ok(clientes);
+			List<Curso> cursos = cursoService.getAllCursos();
+			return ResponseEntity.ok(cursos);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		}	
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> getClienteById(@PathVariable Long id){
+	public ResponseEntity<Curso> getCursoById(@PathVariable Long id){
 		try {
-			Cliente cliente = clienteService.getClienteById(id);
-			return ResponseEntity.ok(cliente);
+			Curso curso = cursoService.findById(id);
+			return ResponseEntity.ok(curso); 
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
@@ -47,20 +47,20 @@ public class ClienteController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente){
+	public ResponseEntity<Curso> createCurso(@RequestBody Curso curso){
 		try {
-			Cliente clienteCreadoCliente = clienteService.saveCliente(cliente);
-			return ResponseEntity.status(HttpStatus.CREATED).body(clienteCreadoCliente);
+			Curso cursoCreado = cursoService.saveCurso(curso);
+			return ResponseEntity.status(HttpStatus.CREATED).body(cursoCreado);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> updateClienteById(@PathVariable Long id, @RequestBody Cliente clienteDetails){
+	public ResponseEntity<Curso> updateCursoById(@PathVariable Long id, @RequestBody Curso cursoDetails){
 		try {
-			Cliente clienteUpdate = clienteService.updateByIdCliente(id, clienteDetails);
-			return ResponseEntity.ok(clienteUpdate);
+			Curso cursoModificado = cursoService.updateCursoById(id, cursoDetails);
+			return ResponseEntity.ok(cursoModificado);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
@@ -69,10 +69,10 @@ public class ClienteController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteClienteById(@PathVariable Long id){
+	public ResponseEntity<Void> deleteCursoById(@PathVariable Long id){
 		try {
-			clienteService.deleteClienteById(id);
-			return ResponseEntity.noContent().build();		
+			cursoService.deleteById(id);
+			return ResponseEntity.noContent().build();
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {

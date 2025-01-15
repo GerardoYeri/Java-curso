@@ -14,70 +14,68 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coderhouse.models.Cliente;
-import com.coderhouse.services.ClienteService;
+import com.coderhouse.models.Categoria;
+import com.coderhouse.services.CategoriaService;
 
 @RestController
-@RequestMapping("/api/clientes")
-public class ClienteController {
-	
+@RequestMapping("/api/categorias")
+public class CategoriaController {
+
 	@Autowired
-	private ClienteService clienteService;
-	
+	private CategoriaService categoriaService;
+
 	@GetMapping
-	public ResponseEntity<List<Cliente>> getAllClientes(){
+	public ResponseEntity<List<Categoria>> getAllCategorias() {
 		try {
-			List<Cliente> clientes = clienteService.getAllClientes();
-			return ResponseEntity.ok(clientes);
+			List<Categoria> categorias = categoriaService.getAllCategorias();
+			return ResponseEntity.ok(categorias);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> getClienteById(@PathVariable Long id){
+	public ResponseEntity<Categoria> getCategoriaById(@PathVariable long id) {
 		try {
-			Cliente cliente = clienteService.getClienteById(id);
-			return ResponseEntity.ok(cliente);
+			Categoria categoria = categoriaService.findById(id);
+			return ResponseEntity.ok(categoria);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente){
+	public ResponseEntity<Categoria> createCategoria(@RequestBody Categoria categoria) {
 		try {
-			Cliente clienteCreadoCliente = clienteService.saveCliente(cliente);
-			return ResponseEntity.status(HttpStatus.CREATED).body(clienteCreadoCliente);
+			Categoria createdCategoria = categoriaService.createCategoria(categoria);
+			return ResponseEntity.status(HttpStatus.CREATED).body(createdCategoria);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> updateClienteById(@PathVariable Long id, @RequestBody Cliente clienteDetails){
+	public ResponseEntity<Categoria> updateCategoria(@PathVariable Long id, @RequestBody Categoria categoriaDetails) {
 		try {
-			Cliente clienteUpdate = clienteService.updateByIdCliente(id, clienteDetails);
-			return ResponseEntity.ok(clienteUpdate);
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			Categoria updatedCategoria = categoriaService.updateCategoriaById(id, categoriaDetails);
+			return ResponseEntity.ok(updatedCategoria);
+
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteClienteById(@PathVariable Long id){
+	public ResponseEntity<Void> deleteCategoria(@PathVariable Long id) {
 		try {
-			clienteService.deleteClienteById(id);
-			return ResponseEntity.noContent().build();		
+			categoriaService.deleteById(id);
+			return ResponseEntity.noContent().build();
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
-	
 }

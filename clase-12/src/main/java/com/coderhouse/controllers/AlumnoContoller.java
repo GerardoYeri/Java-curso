@@ -14,53 +14,55 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.coderhouse.models.Cliente;
-import com.coderhouse.services.ClienteService;
+import com.coderhouse.dtos.InscripcionDto;
+import com.coderhouse.models.Alumno;
+import com.coderhouse.services.AlumnoService;
 
 @RestController
-@RequestMapping("/api/clientes")
-public class ClienteController {
-	
+@RequestMapping("/api/alumnos")
+public class AlumnoContoller {
+
 	@Autowired
-	private ClienteService clienteService;
+	private AlumnoService alumnoService;
 	
 	@GetMapping
-	public ResponseEntity<List<Cliente>> getAllClientes(){
+	public ResponseEntity<List<Alumno>> getAllAlumnos(){
 		try {
-			List<Cliente> clientes = clienteService.getAllClientes();
-			return ResponseEntity.ok(clientes);
+			List<Alumno> alumnos = alumnoService.getAllAlumnos();
+			return ResponseEntity.ok(alumnos);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> getClienteById(@PathVariable Long id){
+	public ResponseEntity<Alumno> getAlumnoById(@PathVariable Long id){
 		try {
-			Cliente cliente = clienteService.getClienteById(id);
-			return ResponseEntity.ok(cliente);
+			Alumno alumno = alumnoService.findById(id);
+			return ResponseEntity.ok(alumno);
 		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.notFound().build();						
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
+	
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente){
+	public ResponseEntity<Alumno> createAlumno(@RequestBody Alumno alumno){
 		try {
-			Cliente clienteCreadoCliente = clienteService.saveCliente(cliente);
-			return ResponseEntity.status(HttpStatus.CREATED).body(clienteCreadoCliente);
+			Alumno alumnoCreado = alumnoService.saveAlumno(alumno);
+			return ResponseEntity.status(HttpStatus.CREATED).body(alumnoCreado);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Cliente> updateClienteById(@PathVariable Long id, @RequestBody Cliente clienteDetails){
+	public ResponseEntity<Alumno> updateAlumnoById(@PathVariable Long id,@RequestBody Alumno alumnoModificado){
 		try {
-			Cliente clienteUpdate = clienteService.updateByIdCliente(id, clienteDetails);
-			return ResponseEntity.ok(clienteUpdate);
+			Alumno updateAlumno = alumnoService.updateAlumnoById(id, alumnoModificado) ;
+			return ResponseEntity.ok(updateAlumno);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
@@ -69,10 +71,10 @@ public class ClienteController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteClienteById(@PathVariable Long id){
+	public ResponseEntity<Void> deleteAlumnoById(@PathVariable Long id){
 		try {
-			clienteService.deleteClienteById(id);
-			return ResponseEntity.noContent().build();		
+			alumnoService.deleteAlumno(id);
+			return ResponseEntity.noContent().build();
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
@@ -80,4 +82,18 @@ public class ClienteController {
 		}
 	}
 	
-}
+	
+	@PostMapping("/inscripcion")
+	public ResponseEntity<Alumno> inscripcionAlumnoAcurso(@RequestBody InscripcionDto dto){
+		try {
+			Alumno alumno = alumnoService.inscribirAlumnoACurso(dto);
+			return ResponseEntity.ok(alumno);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.notFound().build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+}	
+	
+
