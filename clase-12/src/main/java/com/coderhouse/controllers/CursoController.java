@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coderhouse.dtos.AsignacionCategoriaCursoDto;
 import com.coderhouse.models.Curso;
 import com.coderhouse.services.CursoService;
 
@@ -79,5 +80,21 @@ public class CursoController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+	
+	@PostMapping("/asignar-categoria")
+	public ResponseEntity<Curso> asignarCategoriaCurso(@RequestBody AsignacionCategoriaCursoDto dto){
+		try {
+			Curso cursoActualizado = cursoService.asignarCursoCategoria(
+					dto.getCursoId(), 
+					dto.getCategoriaId()
+					);
+			return ResponseEntity.ok(cursoActualizado);
+		} catch (IllegalArgumentException e) {
+			return ResponseEntity.notFound().build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
 	
 }
