@@ -1,18 +1,19 @@
 package com.coderhouse.services;
 
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.management.RuntimeErrorException;
-
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coderhouse.dtos.ClienteRespuestaDto;
 import com.coderhouse.dtos.DetalleDeVentaDto;
 import com.coderhouse.dtos.DetalleVentaRespuestaDto;
-
+import com.coderhouse.dtos.TimeResponseDto;
 import com.coderhouse.dtos.VentaDto;
 import com.coderhouse.dtos.VentaRespuestaDto;
 import com.coderhouse.models.Cliente;
@@ -20,11 +21,11 @@ import com.coderhouse.models.DetalleDeVenta;
 import com.coderhouse.models.Producto;
 import com.coderhouse.models.Venta;
 import com.coderhouse.repositories.ClienteRepository;
-import com.coderhouse.repositories.DetalleDeVentaRepository;
+
 import com.coderhouse.repositories.ProductoRepository;
 import com.coderhouse.repositories.VentaRepository;
 
-import jakarta.persistence.EntityManager;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -39,11 +40,10 @@ public class VentaService {
 	@Autowired
 	private ClienteRepository clienteRepository;
 	
-	@Autowired
-	private DetalleDeVentaRepository detalleDeVentaRepository;
 
+	
 	@Autowired
-	private EntityManager entityManager;
+	private FechaService fechaService;
 	
 	public List<Venta> getAllVentas(){
 		return ventaRepository.findAll();
@@ -84,6 +84,9 @@ public class VentaService {
 		venta.setDetallesDeVenta(detallesVentas);
 		venta.setPrecioTotal(precioTotalVenta);
 		
+		TimeResponseDto fechaActual = fechaService.obteneFechaActual();
+		 
+		venta.setFecha(fechaService.formatearFecha(fechaActual));
 		Venta ventaGuardad = ventaRepository.save(venta);
 		
 		VentaRespuestaDto ventaRespuesta = crearVentaRespuestaDto(ventaGuardad, cliente, detallesRespuesta, precioTotalVenta);
@@ -92,6 +95,7 @@ public class VentaService {
 		
 		return ventaRespuesta;
 	}
+	
 	
 	private Producto calcularStockProducto(Producto producto, int cantidad) {
 		if(producto.getStock()< cantidad) {
@@ -141,6 +145,10 @@ public class VentaService {
 		ventaRespuestaDto.setDetalles(detallesVentaRespuestaDtos);
 		ventaRespuestaDto.setPrecioTotal(precioTotal);
 		
+		TimeResponseDto fechaActual = fechaService.obteneFechaActual();
+		
+		ventaRespuestaDto.setFecha(fechaService.formatearFecha(fechaActual));
+		
 		return ventaRespuestaDto;
 	}
 	
@@ -171,7 +179,7 @@ public class VentaService {
 	        detalleDeVenta.setPrecioUnitario(producto.getPrecioDeVentaConIva());
 	        detalleDeVenta.setSubTotal(detalleDeVenta.getPrecioUnitario() * detalleDto.getCantidad());
 
-	        
+	        detalleDeVenta.setVenta(ventaModificada);
 	        ventaModificada.getDetallesDeVenta().add(detalleDeVenta);
 	        precioTotalVenta += detalleDeVenta.getSubTotal();
 	    }
@@ -184,21 +192,25 @@ public class VentaService {
 	
 	@Transactional
 	public void deleteVentaById(Long id) {
-	    Venta venta = ventaRepository.findById(id)
-	            .orElseThrow(() -> new IllegalArgumentException("Venta no encontrada"));
-
 	    try {
-	        // 1. Restaurar el stock de los productos
+	        // Buscar la venta
+	        Venta venta = ventaRepository.findById(id)
+	                .orElseThrow(() -> new IllegalArgumentException("Venta no encontrada"));
+
+	        // Cargar explícitamente los detalles si es necesario
+	        Hibernate.initialize(venta.getDetallesDeVenta());
+
+	        // Restaurar el stock de los productos
 	        for (DetalleDeVenta detalle : venta.getDetallesDeVenta()) {
 	            Producto producto = detalle.getProducto();
-	            producto.setStock(producto.getStock() + detalle.getCantidad()); // Restaurar stock
-	            productoRepository.save(producto); // Guardamos el producto con el nuevo stock
+	            producto.setStock(producto.getStock() + detalle.getCantidad());
+	            productoRepository.save(producto);
 	        }
 
-	        // 2. Eliminar la venta
-	        ventaRepository.delete(venta); // Ahora eliminamos la venta
+	        // Eliminar la venta (los detalles se eliminarán automáticamente)
+	        
+	        ventaRepository.delete(venta);
 	    } catch (Exception e) {
-	        // Capturar cualquier excepción inesperada
 	        throw new RuntimeException("Error al eliminar la venta: " + e.getMessage(), e);
 	    }
 	}
