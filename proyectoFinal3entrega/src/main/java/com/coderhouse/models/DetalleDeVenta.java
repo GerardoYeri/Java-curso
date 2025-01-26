@@ -1,34 +1,44 @@
 package com.coderhouse.models;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "Detalle_de_Ventas")
+@Table(name = "Detalle_de_Venta")
 @Data
 public class DetalleDeVenta {
 	
-	@Column(name = "ID")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(name = "Total", nullable = false)
-	private double total;
+	@ManyToOne
+	@JoinColumn(name = "venta_id", nullable = false)
+	@JsonBackReference
+	private Venta venta;
 	
-	@OneToMany(mappedBy = "detalleDeVenta", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private List<Venta> ventas = new ArrayList<>();
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "producto_id", nullable = false)
+	private Producto producto;
+	
+	@Column(name = "Cantidad", nullable = false)
+	private int cantidad;
+	
+	@Column(name = "Precio Unitario", nullable = false)
+	private double precioUnitario;
+	
+	@Column(name = "Sub Total", nullable = false)
+	private double subTotal;
+	
 }

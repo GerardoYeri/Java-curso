@@ -2,6 +2,9 @@ package com.coderhouse.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,9 +13,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 @Entity
 @Table(name = "Productos")
+@Data
 public class Producto {
 
 	@Id
@@ -29,7 +34,7 @@ public class Producto {
 	private double costoSinIva;
 	
 	@Column(name = "Porcentaje de ganancia")
-	private int porcentajeGanancia;
+	private double porcentajeGanancia;
 	
 	@Column(name = "Precio de venta sin IVA")
 	private double precioDeVentaSinIva;
@@ -41,8 +46,9 @@ public class Producto {
 	@Column(name = "Stock", nullable = false)
 	private int stock;
 	
-	@OneToMany(mappedBy = "producto", fetch = FetchType.EAGER)
-	private List<Venta> ventas;
+	@OneToMany(mappedBy = "producto", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<DetalleDeVenta> detalles;
 	
 	
 }
