@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"nombre\" : \"Mouse\",\r\n    \"stock\" : 10,\r\n    \"costoConIva\" : 100.00,\r\n    \"porcentajeGanancia\" : 10.00\r\n}",
+					"raw": "{\r\n    \"nombre\" : \"Auriculares\",\r\n    \"stock\" : 10,\r\n    \"costoConIva\" : 100.00,\r\n    \"porcentajeGanancia\" : 10.00\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
