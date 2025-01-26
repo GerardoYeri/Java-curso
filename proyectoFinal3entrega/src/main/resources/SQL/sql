@@ -1,0 +1,7 @@
+CREATE DATABASE IF NOT EXISTS proyectofinal;
+USE proyectofinal;
+
+SELECT * FROM clientes;
+SELECT * FROM productos;
+SELECT * FROM ventas;
+SELECT * FROM detalle_de_venta;

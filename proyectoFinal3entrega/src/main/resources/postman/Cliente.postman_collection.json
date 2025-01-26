@@ -1,0 +1,131 @@
+{
+	"info": {
+		"_postman_id": "a9f153b3-37ab-4bdd-95e2-4087fd6414d9",
+		"name": "Cliente",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40531184"
+	},
+	"item": [
+		{
+			"name": "Crear un cliente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Jeremias\",\r\n    \"apellido\": \"Lazos\",\r\n    \"dni\": 33222334,\r\n    \"edad\": 20,\r\n    \"telefono\": 1112333276,\r\n    \"direccion\": \"Santa Fe 800\",\r\n    \"ciudadOrigen\": \"Villa Maria\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar todos los clientes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/clientes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clientes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lista cliente por id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/clientes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clientes",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar cliente por id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Jere nuevo\",\r\n    \"apellido\": \"Depetris\",\r\n    \"dni\": 55222333,\r\n    \"edad\": 30,\r\n    \"telefono\": 1112333279,\r\n    \"direccion\": \"Rucci 600\",\r\n    \"ciudadOrigen\": \"Villa Maria\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/clientes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clientes",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar cliente por id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/clientes/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clientes",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
