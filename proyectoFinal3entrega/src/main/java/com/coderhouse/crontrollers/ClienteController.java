@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coderhouse.exceptions.ExceptionError;
 import com.coderhouse.models.Cliente;
 import com.coderhouse.services.ClienteService;
 
@@ -52,6 +53,7 @@ public class ClienteController {
 			List<Cliente> clientes = clienteService.getAllClientes();
 			return ResponseEntity.ok(clientes);
 		} catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
 			return ResponseEntity.notFound().build();	
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -72,12 +74,13 @@ public class ClienteController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@GetMapping("/{id}")
-	public ResponseEntity<Cliente> getClienteByID(@PathVariable Long id){
+	public ResponseEntity<?> getClienteByID(@PathVariable Long id){
 		try {
 			Cliente cliente = clienteService.getClienteById(id);
 			return ResponseEntity.ok(cliente);
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+		}catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -102,7 +105,7 @@ public class ClienteController {
 			Cliente clienteCreado = clienteService.createCliente(cliente);
 			return ResponseEntity.status(HttpStatus.CREATED).body(clienteCreado);
 		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.badRequest().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -122,12 +125,13 @@ public class ClienteController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@PutMapping("{id}")
-	public ResponseEntity<Cliente> updateClienteById(@PathVariable Long id, @RequestBody Cliente clienteDetails){
+	public ResponseEntity<?> updateClienteById(@PathVariable Long id, @RequestBody Cliente clienteDetails){
 		try {
 			Cliente clienteModificado = clienteService.updateClienteById(id, clienteDetails);
 			return ResponseEntity.ok(clienteModificado);
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+		}catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -148,12 +152,13 @@ public class ClienteController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@DeleteMapping("{id}")
-	public ResponseEntity<Void> deleteClienteById(@PathVariable Long id){
+	public ResponseEntity<?> deleteClienteById(@PathVariable Long id){
 		try {
 			clienteService.deleteClienteByI(id);;
 			return ResponseEntity.noContent().build();
-		} catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+		}catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}

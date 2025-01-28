@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.coderhouse.exceptions.ExceptionError;
 import com.coderhouse.models.Producto;
 import com.coderhouse.services.ProductoService;
 
@@ -53,6 +53,7 @@ public class ProductoController {
 			List<Producto> productos = productoService.getAllProductos();
 			return ResponseEntity.ok(productos);
 		}catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
 			return ResponseEntity.notFound().build();	
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -73,12 +74,13 @@ public class ProductoController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@GetMapping("{id}")
-	public ResponseEntity<Producto> getProductoById(@PathVariable Long id){
+	public ResponseEntity<?> getProductoById(@PathVariable Long id){
 		try {
 			Producto producto = productoService.getProductoById(id);
 			return ResponseEntity.ok(producto);
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -103,6 +105,9 @@ public class ProductoController {
 			Producto productoCreado = productoService.createProducto(producto);
 			productoService.calcularPrecios(productoCreado);
 			return ResponseEntity.status(HttpStatus.CREATED).body(productoCreado);
+		}catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
+			return ResponseEntity.badRequest().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -122,13 +127,14 @@ public class ProductoController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@PutMapping("{id}")
-	public ResponseEntity<Producto> updateProducto(@PathVariable Long id, @RequestBody Producto producto){
+	public ResponseEntity<?> updateProducto(@PathVariable Long id, @RequestBody Producto producto){
 		try {
 			Producto productosModificado = productoService.updateProductoById(id, producto);
 			productoService.calcularPrecios(productosModificado);
 			return ResponseEntity.ok(productosModificado);
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -148,12 +154,13 @@ public class ProductoController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@DeleteMapping("{id}")
-	public ResponseEntity<Void> deleteProductoById(@PathVariable Long id){
+	public ResponseEntity<?> deleteProductoById(@PathVariable Long id){
 		try {
 			productoService.deleteProductoById(id);
 			return ResponseEntity.noContent().build();
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
