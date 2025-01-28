@@ -190,6 +190,8 @@ public class VentaService {
 	    return ventaRepository.save(ventaModificada);
 	}
 	
+	
+	
 	@Transactional
 	public void deleteVentaById(Long id) {
 	    try {
@@ -207,7 +209,6 @@ public class VentaService {
 	            productoRepository.save(producto);
 	        }
 
-	       
 	        
 	        ventaRepository.delete(venta);
 	    } catch (Exception e) {

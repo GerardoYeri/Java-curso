@@ -2,15 +2,17 @@ package com.coderhouse.exceptions;
 
 import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
 @Component
-@NoArgsConstructor
-@AllArgsConstructor
-public class ExceptionError {
+public class ExceptionError extends Exception {
 
-	private String mensaje;
+	private static final long serialVersionUID = 1L;
+	
+    public ExceptionError(String message) {
+        super(message); 
+    }
+
+    
+    public ExceptionError(String message, Throwable cause) {
+        super(message, cause); 
+    }
 }
