@@ -16,11 +16,15 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Schema(description = "Modelo de Detalle de Venta", title = "Modelo de Detalle de Venta")
 @Entity
 @Table(name = "Detalle_de_Venta")
 @Data
+@Getter
+@Setter
 public class DetalleDeVenta {
 	
 	@Schema(description = "ID del Detalle De Venta", requiredMode = Schema.RequiredMode.REQUIRED, example = "1")

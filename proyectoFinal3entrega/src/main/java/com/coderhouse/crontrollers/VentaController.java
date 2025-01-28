@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.coderhouse.dtos.VentaDto;
 import com.coderhouse.dtos.VentaRespuestaDto;
-
+import com.coderhouse.exceptions.ExceptionError;
 import com.coderhouse.models.Venta;
 import com.coderhouse.services.VentaService;
 
@@ -35,6 +35,8 @@ public class VentaController {
 	
 	@Autowired
 	private VentaService ventaService;
+	
+	
 	
 	@Operation(summary = "Obtener lista de Ventas")
 	@ApiResponses(value = {
@@ -55,6 +57,7 @@ public class VentaController {
 			List<Venta> ventas = ventaService.getAllVentas();
 			return ResponseEntity.ok(ventas);
 		}catch (IllegalArgumentException e) {
+			System.err.println(e.getMessage());
 			return ResponseEntity.notFound().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -75,12 +78,13 @@ public class VentaController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@GetMapping("{id}")
-	public ResponseEntity<Venta> getVentaById(@PathVariable Long id){
+	public ResponseEntity<?> getVentaById(@PathVariable Long id){
 		try {
 			Venta venta = ventaService.getVentaById(id);
 			return ResponseEntity.ok(venta);
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -105,7 +109,7 @@ public class VentaController {
 			VentaRespuestaDto ventaCreada = ventaService.createVenta(dto);
 			return ResponseEntity.status(HttpStatus.CREATED).body(ventaCreada);
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -125,12 +129,13 @@ public class VentaController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@PutMapping("{id}")
-	public ResponseEntity<Venta> upDateVentaById(@PathVariable Long id, @RequestBody VentaDto ventaDto){
+	public ResponseEntity<?> upDateVentaById(@PathVariable Long id, @RequestBody VentaDto ventaDto){
 		try {
 			Venta ventaModificada = ventaService.updateVentaById(id, ventaDto);
 			return ResponseEntity.ok(ventaModificada);
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -150,12 +155,13 @@ public class VentaController {
 			schema = @Schema(implementation = ErrorResponse.class))),
 	})
 	@DeleteMapping("{id}")
-	public ResponseEntity<Void> deleteVentaById(@PathVariable Long id){
+	public ResponseEntity<?> deleteVentaById(@PathVariable Long id){
 		try {
 			ventaService.deleteVentaById(id);
 			return ResponseEntity.noContent().build();
 		}catch (IllegalArgumentException e) {
-			return ResponseEntity.notFound().build();
+			System.err.println(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionError(e.getMessage()));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 		}
