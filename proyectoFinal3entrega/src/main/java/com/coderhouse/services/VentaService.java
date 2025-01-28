@@ -193,21 +193,21 @@ public class VentaService {
 	@Transactional
 	public void deleteVentaById(Long id) {
 	    try {
-	        // Buscar la venta
+	       
 	        Venta venta = ventaRepository.findById(id)
 	                .orElseThrow(() -> new IllegalArgumentException("Venta no encontrada"));
 
-	        // Cargar explícitamente los detalles si es necesario
+	      
 	        Hibernate.initialize(venta.getDetallesDeVenta());
 
-	        // Restaurar el stock de los productos
+	       
 	        for (DetalleDeVenta detalle : venta.getDetallesDeVenta()) {
 	            Producto producto = detalle.getProducto();
 	            producto.setStock(producto.getStock() + detalle.getCantidad());
 	            productoRepository.save(producto);
 	        }
 
-	        // Eliminar la venta (los detalles se eliminarán automáticamente)
+	       
 	        
 	        ventaRepository.delete(venta);
 	    } catch (Exception e) {

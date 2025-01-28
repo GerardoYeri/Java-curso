@@ -109,6 +109,7 @@ public class VentaController {
 			VentaRespuestaDto ventaCreada = ventaService.createVenta(dto);
 			return ResponseEntity.status(HttpStatus.CREATED).body(ventaCreada);
 		}catch (IllegalArgumentException e) {
+			System.err.println("Error al crear la Venta");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
